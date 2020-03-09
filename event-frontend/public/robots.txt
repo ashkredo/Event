@@ -1,3 +1,11 @@
+#
 # https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow:
+#
+# This file is to prevent the crawling and indexing of certain parts
+# of your site by web crawlers and spiders run by sites like Yahoo!
+# and Google. By telling these "robots" where not to go on your site,
+# you save bandwidth and server resources.
+
+User-agent: * # applies to all robots
+Crawl-delay: 10 # stops bot from crawling web pages or website very frequently
+Disallow: / # tells the robot that it should not visit any pages on the site
