@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+require('dotenv').config();
 // Morgan logger middleware function using the given format and options.
 const morgan = require('morgan');
 // Helmet will set various HTTP headers to help protect app.
@@ -9,11 +11,17 @@ const cors = require('cors');
 const middlewares = require('./middlewares');
 
 const app = express();
+
+// Connects to a MongoDB
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true
+});
+
 app.use(morgan('common')); // adds listening logs to console
 app.use(helmet()); // secures network log
 app.use(
   cors({
-    origin: 'http://localhost:3000'
+    origin: process.env.CORS_ORIGIN
   })
 );
 
