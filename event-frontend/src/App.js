@@ -1,10 +1,19 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
+import { connect, Provider } from 'react-redux';
+import { initializeApp } from 'redux/reducers/appReducer';
+import store from 'redux/helpers/store';
 // Routes
 import Home from 'screens/shared/pages/Home';
 import NotFound from 'screens/shared/pages/NotFound';
 
-const App = () => {
+const App = props => {
+  useEffect(() => {
+    props.initializeApp();
+  });
+  if (!props.initialized) return <h1>Preloader</h1>;
+
   return (
     <div className="App">
       <Switch>
@@ -16,10 +25,21 @@ const App = () => {
   );
 };
 
+const mapStateToProps = state => ({
+  initialized: state.app.initialized
+});
+
+const AppContainer = compose(
+  withRouter,
+  connect(mapStateToProps, { initializeApp })
+)(App);
+
 const Event = props => {
   return (
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
     </BrowserRouter>
   );
 };
