@@ -46,3 +46,5 @@ const userEntrySchema = new mongoose.Schema(
 );
 
 const UserEntry = mongoose.model('UserEntry', userEntrySchema);
+
+module.exports = UserEntry;

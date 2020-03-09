@@ -9,12 +9,15 @@ const helmet = require('helmet');
 // the Same-origin policy and access resources from remote hosts.
 const cors = require('cors');
 const middlewares = require('./middlewares');
+const users = require('./api/users');
 
 const app = express();
 
 // Connects to a MongoDB
 mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
 
 app.use(morgan('common')); // adds listening logs to console
@@ -24,6 +27,7 @@ app.use(
     origin: process.env.CORS_ORIGIN
   })
 );
+app.use(express.json());
 
 // --------Controllers-------- //
 app.get('/', (req, res) => {
@@ -31,6 +35,7 @@ app.get('/', (req, res) => {
     message: 'Event API'
   });
 });
+app.use('/api/users', users);
 // catch Not Found (404) & error middlewares
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
