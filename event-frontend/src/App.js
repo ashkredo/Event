@@ -11,9 +11,15 @@ import NotFound from 'screens/shared/pages/NotFound';
 
 const App = props => {
   useEffect(() => {
-    props.initializeApp();
+    if (!props.initialized) props.initializeApp();
   });
-  if (!props.initialized) return <Preloader />;
+  if (!props.initialized)
+    return (
+      <>
+        <Preloader />
+        connecting to backend...
+      </>
+    );
 
   return (
     <div className="App">

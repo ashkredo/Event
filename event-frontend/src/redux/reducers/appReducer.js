@@ -1,4 +1,4 @@
-// import { getEventData } from 'redux/reducers/eventReducer';
+import { appAPI } from 'api';
 
 // Constants
 const INITIALIZED_SUCCESS = 'event-frontend/appReducer/INITIALIZED_SUCCESS';
@@ -31,13 +31,15 @@ export const initializedSuccess = () => ({
 //------------
 
 // Thunk Creators
-export const initializeApp = () => dispatch => {
-  dispatch(initializedSuccess());
-  // const promise = dispatch(getEventData());
-  // Promise.all([promise]).then(() => {
-  //   dispatch(initializedSuccess);
-  // });
+export const initializeApp = () => async dispatch => {
+  const response = await appAPI.connectAPI();
+  Promise.all([response]).then(() => {
+    if (response) {
+      dispatch(initializedSuccess());
+    }
+  });
 };
+
 //------------
 
 export default appReducer;
