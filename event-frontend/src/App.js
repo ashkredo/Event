@@ -5,9 +5,14 @@ import { connect, Provider } from 'react-redux';
 import { initializeApp } from 'redux/reducers/appReducer';
 import store from 'redux/helpers/store';
 import Preloader from 'screens/shared/components/common/Preloader';
+import { withSuspense } from 'hoc/withSuspense';
 // Routes
-import Home from 'screens/shared/pages/Home';
+import HomeContainer from 'screens/shared/pages/Home/HomeContainer';
 import NotFound from 'screens/shared/pages/NotFound';
+// React.lazy
+const EventContainer = React.lazy(() =>
+  import('screens/shared/pages/Event/EventContainer')
+);
 
 const App = props => {
   useEffect(() => {
@@ -24,8 +29,9 @@ const App = props => {
   return (
     <div className="App">
       <Switch>
-        <Route path="/" exact render={() => <Home />} />
-        <Route path="/home" exact render={() => <Home />} />
+        <Route path="/" exact render={() => <HomeContainer />} />
+        <Route path="/home" exact render={() => <HomeContainer />} />
+        <Route path="/event" render={withSuspense(EventContainer)} />
         <Route render={() => <NotFound />} />
       </Switch>
     </div>

@@ -18,10 +18,15 @@ export const appAPI = {
 };
 
 export const usersAPI = {
-  saveUser(userData) {
-    return instance.put(`api/users`, userData).then(response => response.data);
-  },
   getUsers() {
     return instance.get(`api/users`).then(response => response.data);
+  }
+};
+
+export const eventAPI = {
+  saveUser(firstName, lastName, email, eventDate) {
+    return instance
+      .post(`api/users`, { firstName, lastName, email, eventDate })
+      .then(response => response.data);
   }
 };
