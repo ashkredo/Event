@@ -4,6 +4,9 @@ const UserEntry = require('../models/UserEntry');
 
 const router = Router();
 
+/*
+ * GET /users
+ */
 router.get('/', async (req, res, next) => {
   try {
     const entries = await UserEntry.find();
@@ -13,6 +16,21 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+/*
+ * GET /users/:id
+ */
+router.get('/:id', async (req, res, next) => {
+  try {
+    const entries = await UserEntry.findById(req.params.id);
+    res.json(entries);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/*
+ * POST /users
+ */
 router.post('/', async (req, res, next) => {
   try {
     const userEntry = new UserEntry(req.body);
