@@ -4,7 +4,7 @@ const instance = axios.create({
   baseURL:
     window.location.hostname === 'localhost' ? 'http://localhost:1337/' : '',
   headers: {
-    'API-KEY': ''
+    'X-API-KEY': 'Sk7$3B&gSk'
   }
 });
 
