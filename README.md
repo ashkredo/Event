@@ -2,9 +2,9 @@
 Simple app with React on the front end side and connected with simple API written with Node.js.
 
 ## :sunrise_over_mountains: Demo
-[Event-register-app](http://event-register-app.herokuapp.com/)
+[Event Frontend](http://event-register-app.herokuapp.com/)
 
-[Event-register-api](http://event-register-api.herokuapp.com/)
+[Event Backend](http://event-register-api.herokuapp.com/)
 
 ## :bookmark_tabs: Goals
 
