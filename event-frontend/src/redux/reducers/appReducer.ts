@@ -4,14 +4,20 @@ import { appAPI } from 'api';
 const INITIALIZED_SUCCESS = 'event-frontend/appReducer/INITIALIZED_SUCCESS';
 //------------
 
+// InitialStateType
+export type InitialStateType = {
+  initialized: boolean;
+};
+//------------
+
 // InitialState
-const initialState = {
+const initialState: InitialStateType = {
   initialized: false
 };
 //------------
 
 // Dispatch Actions
-const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action: any): InitialStateType => {
   switch (action.type) {
     case INITIALIZED_SUCCESS:
       return {
@@ -24,14 +30,20 @@ const appReducer = (state = initialState, action) => {
 };
 //------------
 
+// Action Creators Type
+type InitializedSuccessActionType = {
+  type: typeof INITIALIZED_SUCCESS;
+};
+//------------
+
 // Action Creators
-export const initializedSuccess = () => ({
+export const initializedSuccess = (): InitializedSuccessActionType => ({
   type: INITIALIZED_SUCCESS
 });
 //------------
 
 // Thunk Creators
-export const initializeApp = () => async dispatch => {
+export const initializeApp = () => async (dispatch: any) => {
   const response = await appAPI.connectAPI();
   Promise.all([response]).then(() => {
     if (response) {
@@ -39,7 +51,6 @@ export const initializeApp = () => async dispatch => {
     }
   });
 };
-
 //------------
 
 export default appReducer;

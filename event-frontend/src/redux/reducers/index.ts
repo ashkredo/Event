@@ -11,4 +11,7 @@ const reducers = combineReducers({
   form: formReducer
 });
 
+type ReducersType = typeof reducers; // (globalstate: AppStateType) => AppStateType
+export type AppStateType = ReturnType<ReducersType>;
+
 export default reducers;

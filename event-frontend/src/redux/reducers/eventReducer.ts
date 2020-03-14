@@ -7,16 +7,20 @@ const SET_USER_DATA = 'event-frontend/eventReducer/SET_USER_DATA';
 
 // InitialState
 const initialState = {
-  firstName: null,
-  lastName: null,
-  email: null,
-  eventDate: null,
+  firstName: null as string | null,
+  lastName: null as string | null,
+  email: null as string | null,
+  eventDate: null as Date | null,
   isRegistered: false
 };
 //------------
 
+// InitialStateType
+export type InitialStateType = typeof initialState;
+//------------
+
 // Dispatch Actions
-const eventReducer = (state = initialState, action) => {
+const eventReducer = (state = initialState, action: any): InitialStateType => {
   switch (action.type) {
     case SET_USER_DATA: {
       return {
@@ -30,14 +34,31 @@ const eventReducer = (state = initialState, action) => {
 };
 //------------
 
+// Action Creators Payload Type
+type SetUserDataActionPayloadType = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  eventDate: Date;
+  isRegistered: boolean;
+};
+//------------
+
+// Action Creators Type
+type SetUserDataActionType = {
+  type: typeof SET_USER_DATA;
+  payload: SetUserDataActionPayloadType;
+};
+//------------
+
 // Action Creators
 export const setUserData = (
-  firstName,
-  lastName,
-  email,
-  eventDate,
-  isRegistered
-) => ({
+  firstName: string,
+  lastName: string,
+  email: string,
+  eventDate: Date,
+  isRegistered: boolean
+): SetUserDataActionType => ({
   type: SET_USER_DATA,
   payload: { firstName, lastName, email, eventDate, isRegistered }
 });
@@ -45,11 +66,11 @@ export const setUserData = (
 
 // Thunk Creators
 export const addUserData = (
-  firstName,
-  lastName,
-  email,
-  eventDate
-) => async dispatch => {
+  firstName: string,
+  lastName: string,
+  email: string,
+  eventDate: Date
+) => async (dispatch: any) => {
   const response = await eventAPI.saveUser(
     firstName,
     lastName,

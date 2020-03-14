@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
+import { AppStateType } from './';
 
-const getUsersSelector = state => {
-  return state.users.users;
+const getUsersSelector = (state: AppStateType) => {
+  return state.usersPage.users;
 };
 
 export const getUsers = createSelector(getUsersSelector, users => {
