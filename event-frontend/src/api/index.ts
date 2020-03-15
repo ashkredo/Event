@@ -1,4 +1,4 @@
-import * as axios from 'axios';
+import axios from 'axios';
 
 const instance = axios.create({
   baseURL:
@@ -10,10 +10,13 @@ const instance = axios.create({
 
 export const appAPI = {
   connectAPI() {
-    return instance
-      .get()
-      .then(response => response.data)
-      .catch(error => '');
+    return instance.get(``).then(
+      (response: {
+        data: {
+          message: string;
+        };
+      }) => response.data
+    );
   }
 };
 
@@ -24,7 +27,12 @@ export const usersAPI = {
 };
 
 export const eventAPI = {
-  saveUser(firstName, lastName, email, eventDate) {
+  saveUser(
+    firstName: string,
+    lastName: string,
+    email: string,
+    eventDate: Date
+  ) {
     return instance
       .post(`api/users`, { firstName, lastName, email, eventDate })
       .then(response => response.data);
