@@ -1,4 +1,7 @@
 import { usersAPI } from 'api';
+import { AppStateType } from 'redux/reducers';
+import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import { UserType } from 'types';
 
 // Constants
@@ -16,7 +19,10 @@ type InitialStateType = typeof initialState;
 //------------
 
 // Dispatch Actions
-const usersReducer = (state = initialState, action: any): InitialStateType => {
+const usersReducer = (
+  state = initialState,
+  action: ActionsTypes
+): InitialStateType => {
   switch (action.type) {
     case SET_USERS: {
       return { ...state, users: action.users };
@@ -27,23 +33,37 @@ const usersReducer = (state = initialState, action: any): InitialStateType => {
 };
 //------------
 
+// ActionsTypes
+type ActionsTypes = SetUsersActionType;
+//------------
+
 // Action Creators Type
-type setUsersActionType = {
+type SetUsersActionType = {
   type: typeof SET_USERS;
   users: Array<UserType>;
 };
 //------------
 
 // Action Creators
-export const setUsers = (users: Array<UserType>): setUsersActionType => ({
+export const setUsers = (users: Array<UserType>): SetUsersActionType => ({
   type: SET_USERS,
   users
 });
 //------------
 
+// Thunk Creators Type
+type DispatchType = Dispatch<ActionsTypes>;
+type ThunkType = ThunkAction<
+  Promise<void>,
+  AppStateType,
+  unknown,
+  ActionsTypes
+>;
+//------------
+
 // Thunk Creators
-export const getUsersData = () => {
-  return async (dispatch: any) => {
+export const getUsersData = (): ThunkType => {
+  return async (dispatch: DispatchType) => {
     const data = await usersAPI.getUsers();
     dispatch(setUsers(data));
   };

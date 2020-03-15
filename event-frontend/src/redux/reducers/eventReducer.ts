@@ -1,5 +1,8 @@
 import { eventAPI } from 'api';
 import { stopSubmit } from 'redux-form';
+import { AppStateType } from 'redux/reducers';
+import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 
 // Constants
 const SET_USER_DATA = 'event-frontend/eventReducer/SET_USER_DATA';
@@ -20,7 +23,10 @@ export type InitialStateType = typeof initialState;
 //------------
 
 // Dispatch Actions
-const eventReducer = (state = initialState, action: any): InitialStateType => {
+const eventReducer = (
+  state = initialState,
+  action: ActionsTypes
+): InitialStateType => {
   switch (action.type) {
     case SET_USER_DATA: {
       return {
@@ -32,6 +38,10 @@ const eventReducer = (state = initialState, action: any): InitialStateType => {
       return state;
   }
 };
+//------------
+
+// ActionsTypes
+type ActionsTypes = SetUserDataActionType;
 //------------
 
 // Action Creators Payload Type
@@ -64,13 +74,23 @@ export const setUserData = (
 });
 //------------
 
+// Thunk Creators Type
+type DispatchType = Dispatch<ActionsTypes> | any;
+type ThunkType = ThunkAction<
+  Promise<void>,
+  AppStateType,
+  unknown,
+  ActionsTypes
+>;
+//------------
+
 // Thunk Creators
 export const addUserData = (
   firstName: string,
   lastName: string,
   email: string,
   eventDate: Date
-) => async (dispatch: any) => {
+): ThunkType => async (dispatch: DispatchType) => {
   const response = await eventAPI.saveUser(
     firstName,
     lastName,
