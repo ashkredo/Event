@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, ReactNode } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -35,7 +35,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const EventPage = ({ children }) => {
+type EventPagePropsType = {
+  children: ReactNode;
+};
+
+const EventPage: FC<EventPagePropsType> = ({ children }) => {
   const classes = useStyles();
   return (
     <div className={classes.image}>

@@ -43,7 +43,11 @@ const HomePage = styled.div`
   }
 `;
 
-export default props => {
+type PropsType = {
+  isRegistered: boolean;
+};
+
+export default (props: PropsType) => {
   return (
     <HomePage>
       <div className="content">

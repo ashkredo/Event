@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import preloader from 'assets/images/preloader.svg';
 
@@ -11,7 +11,7 @@ const Img = styled.img`
   margin: auto;
 `;
 
-const Preloader = props => {
+const Preloader: FC = () => {
   return <Img src={preloader} />;
 };
 

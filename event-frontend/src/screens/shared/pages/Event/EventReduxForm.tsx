@@ -1,5 +1,5 @@
-import React from 'react';
-import { reduxForm, Field } from 'redux-form';
+import React, { FC } from 'react';
+import { reduxForm, Field, InjectedFormProps } from 'redux-form';
 import { Input } from 'screens/shared/components/common/FormsControls';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -16,11 +16,20 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2)
   }
 }));
+type EventFormValuesType = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  eventDate: Date;
+};
 
-const Event = ({ handleSubmit, error }) => {
+const Event: FC<InjectedFormProps<EventFormValuesType>> = ({
+  handleSubmit,
+  error
+}) => {
   const classes = useStyles();
   return (
-    <form className={classes.form} onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Field
@@ -94,7 +103,7 @@ const Event = ({ handleSubmit, error }) => {
   );
 };
 
-const EventReduxForm = reduxForm({
+const EventReduxForm = reduxForm<EventFormValuesType>({
   form: 'event'
 })(Event);
 

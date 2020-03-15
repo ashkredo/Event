@@ -1,9 +1,16 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
+import React, { useEffect, FC } from 'react';
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  withRouter,
+  RouteComponentProps
+} from 'react-router-dom';
 import { compose } from 'redux';
 import { connect, Provider } from 'react-redux';
 import { initializeApp } from 'redux/reducers/appReducer';
 import store from 'redux/helpers/store';
+import { AppStateType } from 'redux/reducers';
 import Preloader from 'screens/shared/components/common/Preloader';
 import { withSuspense } from 'hoc/withSuspense';
 // Routes
@@ -14,7 +21,19 @@ const EventContainer = React.lazy(() =>
   import('screens/shared/pages/Event/EventContainer')
 );
 
-const App = props => {
+type MapStateToPropsType = {
+  initialized: boolean;
+};
+
+type MapDispatchToPropsType = {
+  initializeApp: () => void;
+};
+
+type AppPropsType = MapStateToPropsType &
+  MapDispatchToPropsType &
+  RouteComponentProps;
+
+const App: FC<AppPropsType> = props => {
   useEffect(() => {
     if (!props.initialized) props.initializeApp();
   });
@@ -25,7 +44,6 @@ const App = props => {
         connecting to backend...
       </>
     );
-
   return (
     <div className="App">
       <Switch>
@@ -38,16 +56,17 @@ const App = props => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
   initialized: state.app.initialized
 });
 
 const AppContainer = compose(
-  withRouter,
-  connect(mapStateToProps, { initializeApp })
-)(App);
+  connect(mapStateToProps, {
+    initializeApp
+  })
+)(withRouter(App));
 
-const Event = props => {
+const Event = () => {
   return (
     <BrowserRouter>
       <Provider store={store}>
